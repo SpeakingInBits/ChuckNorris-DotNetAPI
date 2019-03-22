@@ -6,18 +6,39 @@ namespace ChuckNorrisAPI
 {
     public class ChuckNorrisClient
     {
-        public class Joke
+        private static HttpClient client;
+
+        public static Joke GetRandomJoke()
         {
-            public int Id { get; set; }
-            public string JokeText { get; set; }
-            public List<string> Categories { get; set; }
+            throw new NotImplementedException();
         }
 
-        public class WebResponse
+        public static IEnumerable<Joke> GetRandomJokes()
         {
-            public string Type { get; set; }
-
-            public Joke Value { get; set; }
+            throw new NotImplementedException();
         }
+
+        public static Joke GetJokeById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static IEnumerable<string> GetCategories()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class Joke
+    {
+        public int Id { get; set; }
+        public string JokeText { get; set; }
+        public List<string> Categories { get; set; }
+    }
+
+    public class WebResponse
+    {
+        public string Type { get; set; }
+
+        public Joke Value { get; set; }
     }
 }
