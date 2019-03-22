@@ -6,13 +6,6 @@ namespace ChuckNorrisAPI
 {
     public class ChuckNorrisClient
     {
-        private static HttpClient client;
-
-        public static void GetRandomJoke()
-        {
-            throw new NotImplementedException();
-        }
-
         public class Joke
         {
             public int Id { get; set; }
@@ -23,6 +16,7 @@ namespace ChuckNorrisAPI
         public class WebResponse
         {
             public string Type { get; set; }
+
             public Joke Value { get; set; }
         }
     }
