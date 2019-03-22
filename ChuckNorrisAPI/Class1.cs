@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace ChuckNorrisAPI
 {
     public class ChuckNorrisClient
     {
         private static HttpClient client;
+
+        static ChuckNorrisClient()
+        {
+            client.BaseAddress = new Uri("https://api.icndb.com");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
         public static Joke GetRandomJoke()
         {
