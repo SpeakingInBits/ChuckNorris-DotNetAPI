@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace ChuckNorrisAPI
 {
@@ -16,9 +19,22 @@ namespace ChuckNorrisAPI
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static Joke GetRandomJoke()
+        public async static Task<Joke> GetRandomJoke()
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await client.GetAsync("jokes/random");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<ChuckNorrisApiResponse>(await response.Content.ReadAsStringAsync());
+                var joke = data.Value;
+                joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
+
+                return data.Value;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static IEnumerable<Joke> GetRandomJokes()
@@ -43,7 +59,7 @@ namespace ChuckNorrisAPI
         public List<string> Categories { get; set; }
     }
 
-    public class WebResponse
+    internal class ChuckNorrisApiResponse
     {
         public string Type { get; set; }
 
