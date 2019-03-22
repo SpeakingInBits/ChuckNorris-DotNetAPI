@@ -14,6 +14,7 @@ namespace ChuckNorrisAPI
 
         static ChuckNorrisClient()
         {
+            client = new HttpClient();
             client.BaseAddress = new Uri("https://api.icndb.com");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -26,10 +27,10 @@ namespace ChuckNorrisAPI
             if (response.IsSuccessStatusCode)
             {
                 var data = JsonConvert.DeserializeObject<ChuckNorrisApiResponse>(await response.Content.ReadAsStringAsync());
-                var joke = data.Value;
+                var joke = data.JokeData;
                 joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
 
-                return data.Value;
+                return data.JokeData;
             }
             else
             {
@@ -55,6 +56,8 @@ namespace ChuckNorrisAPI
     public class Joke
     {
         public int Id { get; set; }
+
+        [JsonProperty("joke")]
         public string JokeText { get; set; }
         public List<string> Categories { get; set; }
     }
@@ -63,6 +66,7 @@ namespace ChuckNorrisAPI
     {
         public string Type { get; set; }
 
-        public Joke Value { get; set; }
+        [JsonProperty("value")]
+        public Joke JokeData { get; set; }
     }
 }
