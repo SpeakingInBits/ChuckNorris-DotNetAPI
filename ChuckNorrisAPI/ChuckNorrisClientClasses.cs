@@ -77,21 +77,25 @@ namespace ChuckNorrisAPI
             if (response.IsSuccessStatusCode)
             {
                 string result = await response.Content.ReadAsStringAsync();
-                GeneralResponse generalResponse = JsonConvert.DeserializeObject<GeneralResponse>(result);
+                try
+                {
+                    var data = JsonConvert.DeserializeObject<SingleJokeResponse>(result);
+                    var joke = data.JokeData;
+                    joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
 
-                if (generalResponse.Type != "success")
-                    throw new NoSuchQuoteException($"A joke with an id of {id} does not exist");
+                    return data.JokeData;
+                }
+                catch(JsonReaderException jse)
+                {
+                    //this is used when a joke/quote with a specific id cannot be retrieved
+                    GeneralResponse generalResponse = JsonConvert.DeserializeObject<GeneralResponse>(result);
 
-                var data = JsonConvert.DeserializeObject<SingleJokeResponse>(await response.Content.ReadAsStringAsync());
-                var joke = data.JokeData;
-                joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
-
-                return data.JokeData;
+                    if (generalResponse.Type != "success")
+                        throw new NoSuchQuoteException($"{generalResponse.Type}. A joke with an id of {id} does not exist");
+                }
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         public async static Task<IEnumerable<string>> GetCategories()
