@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,7 +27,7 @@ namespace ChuckNorrisAPI
 
             if (response.IsSuccessStatusCode)
             {
-                var data = JsonConvert.DeserializeObject<ChuckNorrisApiResponse>(await response.Content.ReadAsStringAsync());
+                var data = JsonConvert.DeserializeObject<SingleJokeResponse>(await response.Content.ReadAsStringAsync());
                 var joke = data.JokeData;
                 joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
 
@@ -38,19 +39,62 @@ namespace ChuckNorrisAPI
             }
         }
 
-        public static IEnumerable<Joke> GetRandomJokes()
+        public async static Task<IEnumerable<Joke>> GetRandomJokes(int numJokes)
         {
-            throw new NotImplementedException();
+            if (numJokes < 1)
+                throw new ArgumentException($"{nameof(numJokes)} must be a positive number");
+
+            HttpResponseMessage response = await client.GetAsync($"jokes/random/{numJokes}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<MultiJokeResponse>(await response.Content.ReadAsStringAsync());
+                var allJokes = data.Jokes;
+
+                for (int i = 0; i < allJokes.Count(); i++)
+                {
+                    allJokes.ElementAt(i).JokeText = WebUtility.HtmlDecode(allJokes.ElementAt(i).JokeText);
+                }
+
+                return allJokes;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public static Joke GetJokeById(int id)
+        public async static Task<Joke> GetJokeById(int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await client.GetAsync($"jokes/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<SingleJokeResponse>(await response.Content.ReadAsStringAsync());
+                var joke = data.JokeData;
+                joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
+
+                return data.JokeData;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        public static IEnumerable<string> GetCategories()
+        public async static Task<IEnumerable<string>> GetCategories()
         {
-            throw new NotImplementedException();
+            HttpResponseMessage response = await client.GetAsync($"categories");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var data = JsonConvert.DeserializeObject<CategoriesResponse>(await response.Content.ReadAsStringAsync());
+                return data.Categories;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
     public class Joke
@@ -62,11 +106,27 @@ namespace ChuckNorrisAPI
         public List<string> Categories { get; set; }
     }
 
-    internal class ChuckNorrisApiResponse
+    internal class SingleJokeResponse
     {
         public string Type { get; set; }
 
         [JsonProperty("value")]
         public Joke JokeData { get; set; }
+    }
+
+    internal class MultiJokeResponse
+    {
+        public string Type { get; set; }
+
+        [JsonProperty("value")]
+        public IEnumerable<Joke> Jokes { get; set; }
+    }
+
+    internal class CategoriesResponse
+    {
+        public string Type { get; set; }
+
+        [JsonProperty("value")]
+        public string[] Categories { get; set; }
     }
 }
