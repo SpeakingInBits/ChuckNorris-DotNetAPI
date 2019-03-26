@@ -64,12 +64,24 @@ namespace ChuckNorrisAPI
             }
         }
 
+        /// <summary>
+        /// Gets a joke with a specific id
+        /// </summary>
+        /// <param name="id">The id of the joke to look for</param>
+        /// <exception cref="NoSuchQuoteException">Requested quote/joke does not exist</exception>
+        /// <returns></returns>
         public async static Task<Joke> GetJokeById(int id)
         {
             HttpResponseMessage response = await client.GetAsync($"jokes/{id}");
 
             if (response.IsSuccessStatusCode)
             {
+                string result = await response.Content.ReadAsStringAsync();
+                GeneralResponse generalResponse = JsonConvert.DeserializeObject<GeneralResponse>(result);
+
+                if (generalResponse.Type != "success")
+                    throw new NoSuchQuoteException($"A joke with an id of {id} does not exist");
+
                 var data = JsonConvert.DeserializeObject<SingleJokeResponse>(await response.Content.ReadAsStringAsync());
                 var joke = data.JokeData;
                 joke.JokeText = WebUtility.HtmlDecode(joke.JokeText);
@@ -104,6 +116,13 @@ namespace ChuckNorrisAPI
         [JsonProperty("joke")]
         public string JokeText { get; set; }
         public List<string> Categories { get; set; }
+    }
+
+    internal class GeneralResponse
+    {
+        public string Type { get; set; }
+
+        public string Value { get; set; }
     }
 
     internal class SingleJokeResponse
