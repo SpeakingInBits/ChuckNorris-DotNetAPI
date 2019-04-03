@@ -85,7 +85,7 @@ namespace ChuckNorrisAPI
 
                     return data.JokeData;
                 }
-                catch(JsonReaderException)
+                catch(JsonSerializationException)
                 {
                     //this is used when a joke/quote with a specific id cannot be retrieved
                     GeneralResponse generalResponse = JsonConvert.DeserializeObject<GeneralResponse>(result);

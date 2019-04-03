@@ -28,6 +28,17 @@ namespace ApiTester
             Joke j2 = await ChuckNorrisClient.GetJokeById(2);
             WriteLine(j2.JokeText);
 
+            //retrieve joke that doesn't exist
+            WriteLine("Retrieving non-existent joke********************");
+            try
+            {
+                Joke j3 = await ChuckNorrisClient.GetJokeById(20000000);
+            }
+            catch (NoSuchQuoteException)
+            {
+                WriteLine("There is no joke/quote with that id");
+            }
+
 
             ReadKey();
         }

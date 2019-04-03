@@ -7,7 +7,7 @@ namespace ChuckNorrisAPI
     /// Thrown when a joke is requested that does not exist
     /// </summary>
     [Serializable]
-    internal class NoSuchQuoteException : Exception
+    public class NoSuchQuoteException : Exception
     {
         public NoSuchQuoteException()
         {
