@@ -11,7 +11,7 @@ namespace ChuckNorrisAPI
 {
     public class ChuckNorrisClient
     {
-        private static HttpClient client;
+        private static readonly HttpClient client;
 
         static ChuckNorrisClient()
         {
@@ -85,7 +85,7 @@ namespace ChuckNorrisAPI
 
                     return data.JokeData;
                 }
-                catch(JsonReaderException jse)
+                catch(JsonReaderException)
                 {
                     //this is used when a joke/quote with a specific id cannot be retrieved
                     GeneralResponse generalResponse = JsonConvert.DeserializeObject<GeneralResponse>(result);
