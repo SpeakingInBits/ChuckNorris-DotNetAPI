@@ -8,7 +8,12 @@ namespace ApiTester
 {
     class Program
     {
-        static async Task Main()
+        static void Main()
+        {
+            Run().Wait();
+        }
+
+        private static async Task Run()
         {
             //get random joke test
             WriteLine("Getting a single joke**********************");
