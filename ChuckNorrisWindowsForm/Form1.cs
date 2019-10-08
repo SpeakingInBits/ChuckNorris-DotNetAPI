@@ -22,5 +22,11 @@ namespace ChuckNorrisWindowsForm
         {
 
         }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            Joke j = await ChuckNorrisClient.GetRandomJoke();
+            MessageBox.Show($"{j.JokeText}");
+        }
     }
 }
