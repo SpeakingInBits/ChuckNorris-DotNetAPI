@@ -33,12 +33,13 @@
             // 
             // btnGetJoke
             // 
-            this.btnGetJoke.Location = new System.Drawing.Point(51, 80);
+            this.btnGetJoke.Location = new System.Drawing.Point(23, 79);
             this.btnGetJoke.Name = "btnGetJoke";
-            this.btnGetJoke.Size = new System.Drawing.Size(122, 43);
+            this.btnGetJoke.Size = new System.Drawing.Size(138, 27);
             this.btnGetJoke.TabIndex = 0;
             this.btnGetJoke.Text = "Get Random Joke";
             this.btnGetJoke.UseVisualStyleBackColor = true;
+            this.btnGetJoke.Click += new System.EventHandler(this.btnGetJoke_ClickAsync);
             // 
             // Form1
             // 
