@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChuckNorrisAPI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace ChuckNorrisJokeForms
         public Form1()
         {
             InitializeComponent();
+        }
+
+        private void jokeBtn_Click(object sender, EventArgs e)
+        {
+            Joke joke = new Joke();
+            MessageBox.Show($"{joke.JokeText}");
         }
     }
 }

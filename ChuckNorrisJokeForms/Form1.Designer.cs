@@ -28,13 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.jokeBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // jokeBtn
+            // 
+            this.jokeBtn.Location = new System.Drawing.Point(157, 183);
+            this.jokeBtn.Name = "jokeBtn";
+            this.jokeBtn.Size = new System.Drawing.Size(139, 56);
+            this.jokeBtn.TabIndex = 0;
+            this.jokeBtn.Text = "Generate Joke";
+            this.jokeBtn.UseVisualStyleBackColor = true;
+            this.jokeBtn.Click += new System.EventHandler(this.jokeBtn_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(482, 306);
+            this.Controls.Add(this.jokeBtn);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -42,6 +54,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.Button jokeBtn;
     }
 }
 
