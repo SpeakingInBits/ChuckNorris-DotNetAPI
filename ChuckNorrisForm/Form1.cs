@@ -23,5 +23,14 @@ namespace ChuckNorrisForm
             Joke j = await ChuckNorrisClient.GetRandomJoke();
             MessageBox.Show($"{j.Id}:{j.JokeText}\n\n{string.Join(", ", j.Categories)}");
         }
+
+        private async void Form1_Load(object sender, EventArgs e)
+        {
+            IEnumerable<string> categories = await ChuckNorrisClient.GetCategories();
+            foreach (var cat in categories)
+            {
+                DdCategories.Items.Add(cat);
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.BtnGetJoke = new System.Windows.Forms.Button();
+            this.DdCategories = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // BtnGetJoke
@@ -41,14 +42,25 @@
             this.BtnGetJoke.UseVisualStyleBackColor = true;
             this.BtnGetJoke.Click += new System.EventHandler(this.BtnGetJoke_Click);
             // 
+            // DdCategories
+            // 
+            this.DdCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DdCategories.FormattingEnabled = true;
+            this.DdCategories.Location = new System.Drawing.Point(12, 52);
+            this.DdCategories.Name = "DdCategories";
+            this.DdCategories.Size = new System.Drawing.Size(121, 21);
+            this.DdCategories.TabIndex = 1;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(330, 186);
+            this.Controls.Add(this.DdCategories);
             this.Controls.Add(this.BtnGetJoke);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
@@ -56,6 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button BtnGetJoke;
+        private System.Windows.Forms.ComboBox DdCategories;
     }
 }
 
