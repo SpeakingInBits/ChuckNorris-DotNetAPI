@@ -98,7 +98,7 @@ namespace ChuckNorrisAPI
             return null;
         }
 
-        public async static Task<IEnumerable<string>> GetCategories()
+        public static async Task<IEnumerable<string>> GetCategories()
         {
             HttpResponseMessage response = await client.GetAsync($"categories");
 
