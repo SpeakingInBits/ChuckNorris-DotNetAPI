@@ -16,7 +16,7 @@ namespace ChuckNorrisAPI
         static ChuckNorrisClient()
         {
             client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.icndb.com");
+            client.BaseAddress = new Uri("http://api.icndb.com");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
